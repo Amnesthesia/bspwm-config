@@ -1,0 +1,58 @@
+#! /bin/sh
+
+bspc config border_width        0
+bspc config window_gap         24
+
+bspc config split_ratio         0.50
+bspc config borderless_monocle  true
+bspc config gapless_monocle     true
+bspc config focus_by_distance   true
+bspc config focus_follows_pointer	true
+bspc config top_padding 0
+bspc config adaptative_raise true
+bspc config focused_border_color '#28A017'
+bspc config normal_border_color '#8C8C8C'
+bspc config focused_locked_border_color '#28A017'
+bspc config normal_locked_border_color '#8C8C8C'
+bspc config presel_border_color '#F9F9F9'
+
+bspc monitor -d "Scarlet" "Web" "Social" "Music" "Misc" "Alpha" "Beta" "Gamma" "Delta" "Epsilon"
+
+desktop_config(){
+    bspc config $1 $2
+    for M in $(bspc query -M); do
+        bspc config -m $M $1 $2 
+    done
+}
+
+desktop_config border_width 0
+desktop_config window_gap 24
+
+
+bspc rule -a trayer border=on manage=off
+bspc rule -a guake floating=on focus=on sticky=on
+bspc rule -a Gimp desktop=^8 follow=on floating=on
+bspc rule -a Firefox desktop=^2
+bspc rule -a Clementine desktop=^4
+bspc rule -a NuvolaPlayer desktop=^4
+bspc rule -a Spotify desktop=^4
+bspc rule -a mplayer2 floating=on
+bspc rule -a Kupfer.py focus=on
+bspc rule -a Screenkey manage=off
+bspc rule -a Skype desktop=^3
+bspc rule -a Smuxi desktop=^3
+bspc rule -a Pidgin desktop=^3
+bspc rule -a irssi desktop=^3
+bspc rule -a Birdie desktop=^3
+
+workspaces &
+dunst -conf ~/.config/dunst/dunstrc &
+compton &
+sh ~/wallpaper.sh &
+xrdb -merge ~/.Xresources &
+setxkbmap se
+trayer --edge bottom --transparent true --align right --widthtype pixels --width 100 --tint 0x1b1b1b --alpha 0 --heighttype pixel --height 15 --expand true --margin 410 &
+guake &
+cbatticon &
+pasystray &
+nm-applet &
